@@ -1,0 +1,53 @@
+{% extends 'base1.html' %}
+{% block body %}
+<div class="container">
+	<br><br>
+	{% csrf_token %}
+	<div class="row">
+		
+		<div class="col-md-5" method="POST">
+			<form action="/create_short_url/" method="POST">
+				{% csrf_token %}
+				<h6>Create new URL</h6>
+				<input type="text" name="title" placeholder="title" class="form-control">
+				<br>
+				<input type="text"  name="long_url" placeholder="Paste long URL" class="form-control" >
+				<br>
+				<button type="submit" class="btn btn-success">SHORTEN</button>
+			</form>
+		</div>
+		<br>
+		<br>
+		<div class="col-md-8">
+			<h5>Your Short Links</h5>
+			{% for url in long_url %}
+			<div>
+				<div class="card" style="width: 67rem">
+					<div class="card-body">
+						<div style="display: flex;justify-content: space-between;">
+							<div>
+								<h5 class="card-title">TITLE: <br>{{url.title}}</h5>
+								<p class="card-text">{{url.long_url}}</p>
+								
+							</div>
+							<div>
+							<label style="margin-top: 2px;font-size: 15px;">SHORT LINK:
+							</label><br>
+							<a href="http://127.0.0.1:8000/{{url.short_hash}}" target="blank" style="
+							margin-left: 0px">http://127.0.0.1:8000/{{url.short_hash}}</a></div>
+
+						
+						<div>
+						<label style="margin-top:1px">No. of clicks</label><br>
+						<p>{{url.no_clicks}}</p></div>
+					</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
